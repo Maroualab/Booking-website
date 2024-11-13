@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- START progress bar -->
+    <div class="progress-bar">
+      <div class="circle">1</div>
+      <!-- [0] -->
+      <div class="line"></div>
+      <!-- [0] -->
+      <div class="circle">2</div>
+      <!-- [1] -->
+      <div class="line"></div>
+      <!-- [1] -->
+      <div class="circle">3</div>
+      <!-- [2] -->
+      <div class="line"></div>
+      <!-- [2] -->
+      <div class="circle">4</div>
+      <!-- [3] -->
+      <div class="line"></div>
+      <!-- [3] -->
+      <div class="circle">5</div>
+    </div>
+    <!-- END progress bar  -->
+
+    <!-- START welcome section -->
+    <div class="welcome-container" id="welcome">
+      <div class="message-box">
+        <h2>Welcome to Genias Flights!</h2>
+        <p>
+          Ready to start your journey? Book your next adventure with us in just
+          a few easy steps.
+        </p>
+      </div>
+
+      <button class="start-button" id="start-button">Start booking!</button>
+    </div>
+    <!-- END welcome section -->
+
+    <!-- START booking section -->
+    <div class="booking-container" id="booking" style="display: none">
+      <!-- added a section cause display block overides display flex for the div  -->
+      <section>
+        <h2>Step 2: Choose Your Trip Details</h2>
+        <form>
+          <!-- label for Departure -->
+          <select id="departure" name="departure" required>
+            <option value="" disabled selected>Select departure</option>
+            <option value="NYC">New York City</option>
+            <option value="LAX">Los Angeles</option>
+            <option value="ORD">Chicago</option>
+          </select>
+
+          <!-- label for Arrival -->
+          <select id="arrival" name="arrival">
+            <option value="" disabled selected>Select arrival</option>
+            <option value="NYC">New York City</option>
+            <option value="LAX">Los Angeles</option>
+            <option value="ORD">Chicago</option>
+          </select>
+
+          <!-- label for Date-->
+          <input type="date" min="" id="date" name="date" />
+        </form>
+      </section>
+
+      <div class="buttons">
+        <button class="back-button" id="back-button">Back</button>
+        <button class="search-button" id="search-button">Search</button>
+      </div>
+    </div>
+    <!-- END booking section -->
+
+    <!-- START results section -->
+    <div class="results-container" id="results" style="display: none">
+      <h2>Search Results</h2>
+
+      <div id="search-cards"></div>
+
+      <div class="buttons">
+        <button class="back-button" id="back-btn">Back</button>
+        <button class="back-button" id="book_btn">Book</button>
+      </div>
+    </div>
+    <!-- END resiults section -->
+
+    <!-- START traveler selection section -->
+    <div class="reservation_container" id="reservation" style="display: none">
+      <h2>Voyageurs</h2>
+      <div class="traveler-selection">
+        <div class="traveler-type">
+          <p>Adult (Prix 500DH)</p>
+          <button class="btn_rs" onclick="incrementAdult()">+</button>
+          <span id="adult-count">0</span>
+          <button class="btn_rs" onclick="decrementAdult()">-</button>
+        </div>
+        <div class="traveler-type">
+          <p>Enfant (Prix 100DH)</p>
+          <button class="btn_rs" onclick="incrementChild()">+</button>
+          <span id="child-count">0</span>
+          <button class="btn_rs" onclick="decrementChild()">-</button>
+        </div>
+      </div>
+
+      <!-- Seat Selection -->
+      <div class="seat-selection">
+        <p>Choisissez votre place</p>
+        <div class="seats">
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+          <button class="seat btn_rs" onclick="toggleSeat(this)">-</button>
+        </div>
+      </div>
+
+      <p class="total-price">
+        Prix Total: <span id="total-price">0000</span> DH
+      </p>
+
+      <button class="back-button" onclick="resetSelection()">
+        Reset Selection
+      </button>
+
+      <div class="buttons">
+        <button class="back-button" id="back-btn1">Back</button>
+        <button class="back-button" id="book_btn1">Book</button>
+      </div>
+    </div>
+    <!-- END traveler selection section -->
+
+
+    <!-- START passenger info -->
+    <div
+      class="passenger-info-container"
+      id="passenger-info"
+      style="display: none"
+    >
+      <h2>Passenger Information</h2>
+
+      <div class="form">
+        <label for="first-name">First Name:</label>
+        <input
+          type="text"
+          id="first-name"
+          placeholder="Enter First Name"
+          required
+        />
+
+        <label for="last-name">Last Name:</label>
+        <input
+          type="text"
+          id="last-name"
+          placeholder="Enter Last Name"
+          required
+        />
+
+        <div class="buttons">
+        <button class="back-button" id="back_buttonstep5">Back</button>
+        <button class="back-button" id="get-ticket-btn">Get Ticket</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="ticket-popup" class="ticket-popup" style="display: none">
+      <div class="ticket-popup-content">
+        <h3>Your Tickets</h3>
+        <div id="tickets-container"></div>
+        <button onclick="closeTicketPopup()">Close</button>
+      </div>
+    </div>
+    <!-- END passenger info -->
+
+    <img src="images/cloud.svg" alt="Cloud" class="cloud" />
+    <script src="script.js"></script>
+  </body>
+</html>
