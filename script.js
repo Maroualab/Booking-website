@@ -18,12 +18,9 @@ let searchButton = document.getElementById("search-button");
 const infos = document.getElementById("passenger-info");
 let selectedFlight = null;
 
+// section 1
 
-
-
-// section 1 
-
-// start button to move to 2nd step 
+// start button to move to 2nd step
 startButton.addEventListener("click", function () {
   welcomeContainer.style.display = "none";
   bookingForm.style.display = "block";
@@ -32,9 +29,7 @@ startButton.addEventListener("click", function () {
   progressLines[0].classList.add("active");
 });
 
-
-
-//section 2 
+//section 2
 
 // back button to go back
 backButtonStep2.addEventListener("click", function () {
@@ -45,7 +40,7 @@ backButtonStep2.addEventListener("click", function () {
   progressLines[0].classList.remove("active");
 });
 
-// search button : includes conditions and creating the next step's cards 
+// search button : includes conditions and creating the next step's cards
 searchButton.addEventListener("click", function () {
   if (departure.value == "" || arrival.value == "" || date.value == "") {
     alert("Please fill all inputs.");
@@ -65,12 +60,10 @@ searchButton.addEventListener("click", function () {
   progressCircles[1].classList.add("active");
   progressLines[1].classList.add("active");
 
-
   const departureCity = departure.value;
   const arrivalCity = arrival.value;
 
-
-  cards.innerHTML =  `
+  cards.innerHTML = `
     <div class="flight-card" id="economy" onclick="selectFlight('economy')">
       <div class="flight-details">
         <i class="plane-icon">✈️</i>
@@ -107,18 +100,17 @@ searchButton.addEventListener("click", function () {
   `;
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const dateInput = document.getElementById("date");
-  
+
   const today = new Date().toISOString().split("T")[0];
-  
+
   dateInput.setAttribute("min", today);
 });
 
+//section 3
 
-//section 3 
-
-//back button to go back to trip details 
+//back button to go back to trip details
 backButtonStep3.addEventListener("click", function () {
   bookingForm.style.display = "block";
   resultsection.style.display = "none";
@@ -128,13 +120,13 @@ backButtonStep3.addEventListener("click", function () {
   progressLines[1].classList.remove("active");
 
   // Reset the selected flight
-  selectedFlight = null;
-  document.querySelectorAll('.flight-card').forEach(card => {
-    card.classList.remove("selected-flight"); 
+  // selectedFlight = null;
+  document.querySelectorAll(".flight-card").forEach((card) => {
+    card.classList.remove("selected-flight");
   });
 });
 
-// Bookbutton with function to select flight and add slected flight class 
+// Bookbutton with function to select flight and add slected flight class
 bookButtonStep3.addEventListener("click", function () {
   if (!selectedFlight) {
     alert("Please select a flight option.");
@@ -149,10 +141,9 @@ bookButtonStep3.addEventListener("click", function () {
 });
 
 function selectFlight(flightType) {
-
   if (selectedFlight === flightType) {
-    selectedFlight = null; 
-    document.querySelectorAll('.flight-card').forEach(card => {
+    selectedFlight = null;
+    document.querySelectorAll(".flight-card").forEach((card) => {
       card.classList.remove("selected-flight", "blur");
     });
     console.log("No flight selected");
@@ -160,7 +151,7 @@ function selectFlight(flightType) {
     // Otherwise, select the new flight and blur the others
     selectedFlight = flightType;
 
-    document.querySelectorAll('.flight-card').forEach(card => {
+    document.querySelectorAll(".flight-card").forEach((card) => {
       if (card.id === flightType) {
         card.classList.add("selected-flight");
         card.classList.remove("blur");
@@ -174,24 +165,27 @@ function selectFlight(flightType) {
   }
 }
 
+//section 4
 
-//section 4 
+// book button to get to the next section of infos
 
-// book button to get to the next section of infos 
+bookButtonStep4.addEventListener("click", function () {
 
-bookButtonStep4.addEventListener('click', function(){
+  if (travelerCounts.adult === 0 && travelerCounts.child === 0 &&  selectedSeats === 0) {
+    alert("please select number of passengers and seats ");
+    return;
+  }
 
-  booksection.style.display ="none";
-  infos.style.display="block";
+  booksection.style.display = "none";
+  infos.style.display = "block";
 
   progressCircles[3].classList.add("active");
   progressLines[3].classList.add("active");
 
-
+  
 });
 
-
-// back button to go back to the flight cards and clear the selection of travelers 
+// back button to go back to the flight cards and clear the selection of travelers
 backButtonStep4.addEventListener("click", function () {
   resultsection.style.display = "block";
   booksection.style.display = "none";
@@ -204,15 +198,13 @@ backButtonStep4.addEventListener("click", function () {
   document.getElementById("adult-count").innerText = travelerCounts.adult;
   document.getElementById("child-count").innerText = travelerCounts.child;
 
-  document.querySelectorAll(".seat.selected").forEach(seat => {
+  document.querySelectorAll(".seat.selected").forEach((seat) => {
     seat.classList.remove("selected");
   });
   selectedSeats = 0;
 
   document.getElementById("total-price").innerText = "0000";
 });
-
-
 
 let travelerCounts = { adult: 0, child: 0 };
 let selectedSeats = 0;
@@ -290,45 +282,66 @@ function resetSelection() {
   document.getElementById("child-count").innerText = travelerCounts.child;
 
   const seatButtons = document.querySelectorAll(".seat");
-  seatButtons.forEach(button => button.classList.remove("selected"));
+  seatButtons.forEach((button) => button.classList.remove("selected"));
   selectedSeats = 0;
 
   updateDisplay();
 }
 
+// section 5
 
-// section 5 
+document
+  .getElementById("get-ticket-btn")
+  .addEventListener("click", function () {
+    const firstName = document.getElementById("first-name").value.trim();
+    const lastName = document.getElementById("last-name").value.trim();
 
-document.getElementById("get-ticket-btn").addEventListener("click", function () {
-  const firstName = document.getElementById("first-name").value.trim();
-  const lastName = document.getElementById("last-name").value.trim();
+    if (firstName === "" || lastName === "") {
+      alert("Please fill in both first and last name.");
+      return;
+    }
 
-  if (firstName === "" || lastName === "") {
-    alert("Please fill in both first and last name.");
-    return;
-  }
-
-  generateTickets(firstName, lastName);
-});
+    generateTickets(firstName, lastName);
+  });
 
 function generateTickets(firstName, lastName) {
   const ticketsContainer = document.getElementById("tickets-container");
-  ticketsContainer.innerHTML = ""; 
+  ticketsContainer.innerHTML = "";
 
-  const totalTravelers = travelerCounts.adult + travelerCounts.child;
+  // const totalTravelers = travelerCounts.adult + travelerCounts.child;
 
-  for (let i = 1; i <= totalTravelers; i++) {
+  for (let i = 1; i <= travelerCounts.adult; i++) {
     const ticket = document.createElement("div");
     ticket.classList.add("ticket");
 
-    const seatNumber = i;  
+    // const seatNumber = i;
     const ticketHTML = `
       <p><strong>Passenger:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Seat Number:</strong> ${seatNumber}</p>
-      <p><strong>Flight Type:</strong> ${selectedFlight.charAt(0).toUpperCase() + selectedFlight.slice(1)} Flight</p>
+      <p><strong>Type:</strong>Adult</p>
+      <p><strong>Flight Type:</strong> ${selectedFlight} Flight</p>
       <p><strong>From:</strong> ${departure.value}</p>
       <p><strong>To:</strong> ${arrival.value}</p>
       <p><strong>Date:</strong> ${date.value}</p>
+  
+    `;
+
+    ticket.innerHTML = ticketHTML;
+    ticketsContainer.appendChild(ticket);
+  }
+
+  for (let i = 1; i <= travelerCounts.child; i++) {
+    const ticket = document.createElement("div");
+    ticket.classList.add("ticket");
+
+    // const seatNumber = i;
+    const ticketHTML = `
+      <p><strong>Passenger:</strong> ${firstName} ${lastName}</p>
+      <p><strong>Type:</strong>Child</p>
+      <p><strong>Flight Type:</strong> ${selectedFlight} Flight</p>
+      <p><strong>From:</strong> ${departure.value}</p>
+      <p><strong>To:</strong> ${arrival.value}</p>
+      <p><strong>Date:</strong> ${date.value}</p>
+  
     `;
 
     ticket.innerHTML = ticketHTML;
@@ -338,8 +351,16 @@ function generateTickets(firstName, lastName) {
   document.getElementById("ticket-popup").style.display = "flex";
 }
 
-
 function closeTicketPopup() {
   document.getElementById("ticket-popup").style.display = "none";
 }
 
+document
+  .getElementById("back_buttonstep5")
+  .addEventListener("click", function () {
+    infos.style.display = "none";
+    booksection.style.display = "block";
+
+    document.getElementById("first-name").value = "";
+    document.getElementById("last-name").value = "";
+  });
