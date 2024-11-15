@@ -76,26 +76,28 @@ searchButton.addEventListener("click", function () {
       </div>
     </div>
     <div class="flight-card" id="business" onclick="selectFlight('business')">
-      <div class="flight-info">
-        <p class="from">From: ${departureCity}</p>
-        <span class="arrow">&#8594;</span>
-        <p class="to">To: ${arrivalCity}</p>
-      </div>
-      <div class="flight-details">
+     <div class="flight-details">
         <p class="flight-type">Business</p>
         <i class="plane-icon">✈️</i>
       </div>
-    </div>
-    <div class="flight-card" id="first-class" onclick="selectFlight('first-class')">
       <div class="flight-info">
         <p class="from">From: ${departureCity}</p>
         <span class="arrow">&#8594;</span>
         <p class="to">To: ${arrivalCity}</p>
       </div>
-      <div class="flight-details">
+     
+    </div>
+    <div class="flight-card" id="first-class" onclick="selectFlight('first-class')">
+     <div class="flight-details">
         <p class="flight-type">First Class</p>
         <i class="plane-icon">✈️</i>
       </div>
+      <div class="flight-info">
+        <p class="from">From: ${departureCity}</p>
+        <span class="arrow">&#8594;</span>
+        <p class="to">To: ${arrivalCity}</p>
+      </div>
+     
     </div>
   `;
 });
@@ -170,11 +172,26 @@ function selectFlight(flightType) {
 // book button to get to the next section of infos
 
 bookButtonStep4.addEventListener("click", function () {
+ 
+  const totalTravelers = travelerCounts.adult + travelerCounts.child;
 
-  if (travelerCounts.adult === 0 && travelerCounts.child === 0 &&  selectedSeats === 0) {
-    alert("please select number of passengers and seats ");
+  if (travelerCounts.adult + travelerCounts.child === 0) {
+    console.log(travelerCounts.adult + travelerCounts.child);
+    
+    alert("Please select at least one passenger.");
     return;
   }
+  
+  if (selectedSeats === 0) {
+    alert("Please select at least one seat.");
+    return;
+  }
+
+  if (selectedSeats !== totalTravelers) {
+    alert("Select seats for all passengers.");
+    return;
+  }
+
 
   booksection.style.display = "none";
   infos.style.display = "block";
@@ -206,6 +223,7 @@ backButtonStep4.addEventListener("click", function () {
   document.getElementById("total-price").innerText = "0000";
 });
 
+
 let travelerCounts = { adult: 0, child: 0 };
 let selectedSeats = 0;
 const maxTravelers = 8;
@@ -231,7 +249,10 @@ function toggleSeat(seatButton) {
     selectedSeats++;
   } else {
     alert("Select seats within the number of travelers.");
+    return;
   }
+
+  
   updateDisplay();
 }
 
@@ -290,9 +311,7 @@ function resetSelection() {
 
 // section 5
 
-document
-  .getElementById("get-ticket-btn")
-  .addEventListener("click", function () {
+document.getElementById("get-ticket-btn").addEventListener("click", function () {
     const firstName = document.getElementById("first-name").value.trim();
     const lastName = document.getElementById("last-name").value.trim();
 
@@ -356,7 +375,7 @@ function closeTicketPopup() {
 }
 
 document
-  .getElementById("back_buttonstep5")
+.getElementById("back_buttonstep5")
   .addEventListener("click", function () {
     infos.style.display = "none";
     booksection.style.display = "block";
